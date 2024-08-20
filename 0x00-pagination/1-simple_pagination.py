@@ -1,17 +1,7 @@
 #!/usr/bin/env python3
-"""Main file"""
-
-
+"""Simple pagination."""
 import csv
-import math
-from typing import List
-
-
-def index_range(page: int, page_size: int) -> tuple:
-    """main def"""
-    start_index = (page - 1) * page_size
-    end_index = page * page_size
-    return start_index, end_index
+from typing import List, Tuple
 
 
 class Server:
@@ -34,13 +24,18 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
-        assert isinstance(page, int) and page > 0
-        assert isinstance(page_size, int) and page_size > 0
-        start_index, end_index = index_range(page, page_size)
-        dataset = self.dataset()
-        if start_index > len(dataset):
-            return []
-        return dataset[start_index: end_index]
+        """Return list of rows from dataset."""
+        assert type(page) is int and page > 0
+        assert type(page_size) is int and page_size > 0
+
+        start, end = index_range(page, page_size)
+        return self.dataset()[start:end]
+
+
+def index_range(page: int, page_size: int) -> Tuple[int, int]:
+    """Return tuple of size two containing a start index and an end index."""
+    return ((page - 1) * page_size, page * page_size)
+
 
 if __name__ == "__main__":
     server = Server()
