@@ -1,17 +1,22 @@
 #!/usr/bin/python3
-"""FIFO caching."""
-
-
+"""LIFO caching.
+"""
 BaseCaching = __import__('base_caching').BaseCaching
 
 
 class LIFOCache(BaseCaching):
+    """LIFOCache class.
+    """
 
     def __init__(self):
+        """Constructor.
+        """
         super().__init__()
         self.queue = []
 
     def put(self, key, item):
+        """Put method.
+        """
         if key and item:
             if key in self.cache_data:
                 self.queue.remove(key)
@@ -23,6 +28,8 @@ class LIFOCache(BaseCaching):
             self.cache_data[key] = item
 
     def get(self, key):
+        """Get method.
+        """
         if key in self.cache_data:
             return self.cache_data[key]
         return None
