@@ -4,7 +4,7 @@
 BaseCaching = __import__('base_caching').BaseCaching
 
 
-class LIFOCache(BaseCaching):
+class LRUCache(BaseCaching):
     """LIFOCache class.
     """
 
@@ -31,9 +31,10 @@ class LIFOCache(BaseCaching):
         """Get method.
         """
         if key in self.cache_data:
+            self.queue.remove(key)
             return self.cache_data[key]
         return None
 
 
 if __name__ == "__main__":
-    my_cache = LIFOCache()
+    my_cache = LRUCache()
